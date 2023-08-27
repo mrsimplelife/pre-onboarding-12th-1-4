@@ -6,6 +6,7 @@ export const TodoContext = createContext<{
   createTodo: (todo: string) => void;
   updateTodo: (id: number, todo: string, isCompleted: boolean) => void;
   deleteTodo: (id: number) => void;
+  sortTodo: (index: number, change: number) => void;
   loading: boolean;
   isLoaded: boolean;
 }>({
@@ -13,6 +14,7 @@ export const TodoContext = createContext<{
   createTodo: () => {},
   deleteTodo: () => {},
   updateTodo: () => {},
+  sortTodo: () => {},
   loading: false,
   isLoaded: false,
 });

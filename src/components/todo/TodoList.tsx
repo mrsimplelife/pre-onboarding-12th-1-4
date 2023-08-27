@@ -1,18 +1,32 @@
 import TodoItem from './TodoItem';
+import DraggableItem from 'components/common/Draggble';
 import { TodoContext } from 'context/todo/TodoContext';
+import useDrag from 'hooks/useDrag';
 import { useContext } from 'react';
 import { styled } from 'styled-components';
 import { TodoListStyle } from 'styles/CommonStyle';
 
 export default function TodoList() {
-  const { todos, loading } = useContext(TodoContext);
-
+  const { todos, loading, sortTodo } = useContext(TodoContext);
+  const { onDragStart, onDragOver, onDrop, onDragEnd, dragAnimation } = useDrag(sortTodo);
   return (
     <TodoListStyle>
       {todos.length === 0 ? (
         <p>일정이 없습니다.</p>
       ) : (
-        todos.map(todo => <TodoItem key={todo.id} todo={todo} />)
+        todos.map((todo, index) => (
+          <DraggableItem
+            key={todo.id}
+            index={index}
+            onDragStart={onDragStart}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+            onDragEnd={onDragEnd}
+            dragAnimation={dragAnimation}
+          >
+            <TodoItem todo={todo} />
+          </DraggableItem>
+        ))
       )}
       <Loading loading={loading} />
     </TodoListStyle>
