@@ -48,8 +48,20 @@ export default function TodoContextProvider({ children }: { children: ReactNode 
     [handleLoading],
   );
 
+  const sortTodo = useCallback((index: number, change: number) => {
+    setTodos(prev => {
+      const arr = [...prev];
+      const sortingItem = arr[index];
+      arr.splice(index, 1);
+      arr.splice(change, 0, sortingItem);
+      return arr;
+    });
+  }, []);
+
   return (
-    <TodoContext.Provider value={{ todos, createTodo, updateTodo, deleteTodo, loading, isLoaded }}>
+    <TodoContext.Provider
+      value={{ todos, createTodo, updateTodo, deleteTodo, sortTodo, loading, isLoaded }}
+    >
       {children}
     </TodoContext.Provider>
   );
